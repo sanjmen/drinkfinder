@@ -13,13 +13,13 @@ function Drink(props) {
         <div className="card p-2 my-2">
             <div className="card-content">
                 <div className="media">
-                    <div className="media-left">
+                    <div className="media-left p-5">
                         <figure className="image is-128x128">
                             <img src={`${drink.strDrinkThumb}/preview`} alt={drink.strDrink}></img>
                         </figure>
                     </div>
                     <div className="media-content">
-                        <p className="title is-4">Name: <a className="is-primary" onClick={toggleModal}>{drink.strDrink}</a></p>
+                        <button className="button is-ghost title is-4" onClick={toggleModal}>{drink.strDrink}</button>
                         <table className="table is-bordered">
                             <thead>
                                 <tr>
