@@ -1,0 +1,11 @@
+@charset "utf-8";
+// any customizations you want to make to bulma should go here
+// see https://bulma.io/documentation/customize/ for more information
+
+$primary: rgb(67, 57, 115);
+$secondary: rgb(225, 120, 81);
+$background: rgb(228, 228, 228);
+$accent: rgb(114, 112, 110);
+$family-primary: "Inter", sans-serif;
+
+@import "~bulma/bulma.sass";
