@@ -5,8 +5,8 @@ export default function Search(props) {
 
     return (
         <form className="box">
-            <div class="field has-addons">
-                <div class="control">
+            <div className="field has-addons">
+                <div className="control">
                     <button className="button is-static is-medium">
                         Name:
                     </button>
