@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Search from "./search/index";
+import Filter from "./filter/index";
 import Drinks from "./drinks/index";
 import Api from "./data/api";
 
@@ -8,9 +9,14 @@ export default function App() {
   const [drinks, setDrinks] = useState([]);
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [isAlcoholic, setIsAlcoholic] = useState(true);
 
   function handleQueryChange(query) {
     setQuery(query);
+  }
+
+  function handleIsAlcoholicChange() {
+    setIsAlcoholic(!isAlcoholic);
   }
 
   useEffect(() => {
@@ -32,6 +38,12 @@ export default function App() {
     <section className="section">
       <div className="container is-fullhd">
         <div className="columns">
+          <div className="column is-one-quarter has-text-left">
+            <Filter
+              isAlcoholic={isAlcoholic}
+              onIsAlcoholicChange={handleIsAlcoholicChange}
+            />
+          </div>
           <div className="column">
             <Search
               query={query}
@@ -41,6 +53,7 @@ export default function App() {
               drinks={drinks}
               error={error}
               loaded={loaded}
+              isAlcoholic={isAlcoholic}
             />
           </div>
         </div>

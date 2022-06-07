@@ -27,11 +27,16 @@ function NoResults() {
 }
 
 export default function Drinks(props) {
-    const { error, loaded, drinks } = props;
+    const { error, loaded, drinks, isAlcoholic } = props;
     const rows = [];
 
     if (drinks) {
         drinks.forEach((drink) => {
+            // Alcoholic/Non alcoholic filter
+            if (drink.strAlcoholic.includes('Non') === isAlcoholic) {
+                return;
+            }
+
             rows.push(
                 <Drink
                     drink={drink}
