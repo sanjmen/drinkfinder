@@ -54,7 +54,7 @@ function NoResults() {
 }
 
 export default function Drinks(props) {
-    const { error, loaded, drinks, isAlcoholic } = props;
+    const { error, loaded, drinks, isAlcoholic, ingredient } = props;
     const items = [];
 
     if (drinks) {
@@ -62,6 +62,21 @@ export default function Drinks(props) {
             // Alcoholic/Non alcoholic filter
             if (drink.strAlcoholic.includes('Non') === isAlcoholic) {
                 return;
+            }
+
+            // Ingredient filter
+            if (ingredient !== "Choose one") {
+                const ingredients = [];
+                for (let step = 0; step < 20; step++) {
+                    let key = `strIngredient${step}`;
+                    if (drink[key]) {
+                        ingredients.push(drink[key])
+                    }
+                }
+
+                if (!ingredients.includes(ingredient)) {
+                    return
+                }
             }
 
             items.push(

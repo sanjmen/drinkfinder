@@ -3,6 +3,7 @@ import Search from "./search/index";
 import Filter from "./filter/index";
 import Drinks from "./drinks/index";
 import Api from "./data/api";
+import sortResults from "./data/utils";
 
 export default function App() {
   const [query, setQuery] = useState('Bourbon');
@@ -10,6 +11,8 @@ export default function App() {
   const [error, setError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [isAlcoholic, setIsAlcoholic] = useState(true);
+  const [ingredients, setIngredients] = useState([]);
+  const [ingredient, setIngredient] = useState('Choose one');
 
   function handleQueryChange(query) {
     setQuery(query);
@@ -17,6 +20,10 @@ export default function App() {
 
   function handleIsAlcoholicChange() {
     setIsAlcoholic(!isAlcoholic);
+  }
+
+  function handleIngredientChange(value) {
+    setIngredient(value);
   }
 
   useEffect(() => {
@@ -34,6 +41,13 @@ export default function App() {
     }
   }, [query]);
 
+  useEffect(() => {
+    Api.getIngredientFilters()
+      .then(data => {
+        setIngredients(sortResults(data.drinks, "strIngredient1"))
+      });
+  }, [ingredient])
+
   return (
     <section className="section">
       <div className="container is-fullhd">
@@ -42,6 +56,8 @@ export default function App() {
             <Filter
               isAlcoholic={isAlcoholic}
               onIsAlcoholicChange={handleIsAlcoholicChange}
+              ingredients={ingredients}
+              onIngredientChange={handleIngredientChange}
             />
           </div>
           <div className="column">
@@ -54,6 +70,7 @@ export default function App() {
               error={error}
               loaded={loaded}
               isAlcoholic={isAlcoholic}
+              ingredient={ingredient}
             />
           </div>
         </div>
