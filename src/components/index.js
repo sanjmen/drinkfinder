@@ -79,7 +79,7 @@ export default function App() {
     <section className="section">
       <div className="container is-fullhd">
         <div className="columns">
-          <div className="column is-one-quarter has-text-left">
+          <div className="column is-one-third has-text-left">
             <Filter
               isAlcoholic={isAlcoholic}
               onIsAlcoholicChange={handleIsAlcoholicChange}
