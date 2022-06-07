@@ -1,34 +1,61 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
+import Modal from "../modal/index";
 
 function Drink(props) {
+    const [modalState, setModalState] = useState(false);
     const drink = props.drink;
 
+    function toggleModal() {
+        setModalState(!modalState);
+    }
+
     return (
-        <tr>
-            <td>
-                <figure className="image is-128x128">
-                    <img src={`${drink.strDrinkThumb}/preview`} alt={drink.strDrink}></img>
-                </figure>
-            </td>
-            <td>{drink.strDrink}</td>
-            <td>{drink.strAlcoholic}</td>
-            <td>{drink.strCategory}</td>
-            <td>{drink.strGlass}</td>
-        </tr>
+        <div className="card p-2 my-2">
+            <div className="card-content">
+                <div className="media">
+                    <div className="media-left">
+                        <figure className="image is-128x128">
+                            <img src={`${drink.strDrinkThumb}/preview`} alt={drink.strDrink}></img>
+                        </figure>
+                    </div>
+                    <div className="media-content">
+                        <p className="title is-4">Name: <a className="is-primary" onClick={toggleModal}>{drink.strDrink}</a></p>
+                        <table className="table is-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Alcoholic</th>
+                                    <th>Category</th>
+                                    <th>Glass</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{drink.strAlcoholic}</td>
+                                    <td>{drink.strCategory}</td>
+                                    <td>{drink.strGlass}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <Modal
+                closeModal={toggleModal}
+                modalState={modalState}
+                drink={drink}
+            ></Modal>
+        </div>
     );
 }
 
 function NoResults() {
     return (
-        <tr>
-            <td>No Results. Try another search.</td>
-        </tr>
+        <h4>No Results. Try another search.</h4>
     )
 }
 
 export default function Drinks(props) {
     const { error, loaded, drinks, isAlcoholic } = props;
-    const rows = [];
+    const items = [];
 
     if (drinks) {
         drinks.forEach((drink) => {
@@ -37,7 +64,7 @@ export default function Drinks(props) {
                 return;
             }
 
-            rows.push(
+            items.push(
                 <Drink
                     drink={drink}
                     key={drink.idDrink}
@@ -45,7 +72,7 @@ export default function Drinks(props) {
             );
         });
     } else {
-        rows.push(<NoResults key="no-results" />)
+        items.push(<NoResults key="no-results" />)
     }
 
     return (
@@ -55,19 +82,9 @@ export default function Drinks(props) {
             ) : !loaded ? (
                 <p>Loading ...</p>
             ) : (
-                <table className="table is-fullwidth is-hoverable">
-                    <thead>
-                        <tr>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Alcoholic</th>
-                            <th>Category</th>
-                            <th>Glass</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </table>
-            )}
+                <Fragment>{items}</Fragment>
+            )
+            }
         </div>
     );
 }
