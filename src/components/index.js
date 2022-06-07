@@ -5,6 +5,7 @@ import Drinks from "./drinks/index";
 import Api from "./data/api";
 import sortResults from "./data/utils";
 
+
 export default function App() {
   const [query, setQuery] = useState('Bourbon');
   const [drinks, setDrinks] = useState([]);
@@ -13,6 +14,10 @@ export default function App() {
   const [isAlcoholic, setIsAlcoholic] = useState(true);
   const [ingredients, setIngredients] = useState([]);
   const [ingredient, setIngredient] = useState('Choose one');
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState('Choose one')
+  const [glasses, setGlasses] = useState([]);
+  const [glass, setGlass] = useState('Choose one')
 
   function handleQueryChange(query) {
     setQuery(query);
@@ -24,6 +29,14 @@ export default function App() {
 
   function handleIngredientChange(value) {
     setIngredient(value);
+  }
+
+  function handleCategoryChange(value) {
+    setCategory(value);
+  }
+
+  function handleGlassChange(value) {
+    setGlass(value);
   }
 
   useEffect(() => {
@@ -48,6 +61,20 @@ export default function App() {
       });
   }, [ingredient])
 
+  useEffect(() => {
+    Api.getCategoryFilters()
+      .then(data => {
+        setCategories(sortResults(data.drinks, "strCategory"))
+      });
+  }, [category])
+
+  useEffect(() => {
+    Api.getGlassFilters()
+      .then(data => {
+        setGlasses(sortResults(data.drinks, "strGlass"))
+      });
+  }, [glass])
+
   return (
     <section className="section">
       <div className="container is-fullhd">
@@ -58,6 +85,10 @@ export default function App() {
               onIsAlcoholicChange={handleIsAlcoholicChange}
               ingredients={ingredients}
               onIngredientChange={handleIngredientChange}
+              glasses={glasses}
+              onGlassChange={handleGlassChange}
+              categories={categories}
+              onCategoryChange={handleCategoryChange}
             />
           </div>
           <div className="column">
@@ -71,6 +102,8 @@ export default function App() {
               loaded={loaded}
               isAlcoholic={isAlcoholic}
               ingredient={ingredient}
+              category={category}
+              glass={glass}
             />
           </div>
         </div>

@@ -54,7 +54,7 @@ function NoResults() {
 }
 
 export default function Drinks(props) {
-    const { error, loaded, drinks, isAlcoholic, ingredient } = props;
+    const { error, loaded, drinks, isAlcoholic, ingredient, glass, category } = props;
     const items = [];
 
     if (drinks) {
@@ -75,6 +75,20 @@ export default function Drinks(props) {
                 }
 
                 if (!ingredients.includes(ingredient)) {
+                    return
+                }
+            }
+
+            // Category filter
+            if (category !== "Choose one") {
+                if (!drink.strCategory.includes(category)) {
+                    return
+                }
+            }
+
+            // Glass filter
+            if (glass !== "Choose one") {
+                if (!drink.strGlass.includes(glass)) {
                     return
                 }
             }

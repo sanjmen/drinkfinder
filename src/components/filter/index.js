@@ -51,6 +51,14 @@ export default function Filter(props) {
         props.onIngredientChange(e.target.value);
     }
 
+    function handleCategoryChange(e) {
+        props.onCategoryChange(e.target.value);
+    }
+
+    function handleGlassChange(e) {
+        props.onGlassChange(e.target.value);
+    }
+
     function handleIsAlcoholicChange(e) {
         props.onIsAlcoholicChange(e.target.checked);
     }
@@ -59,6 +67,8 @@ export default function Filter(props) {
         <form className="box">
             <Checkbox label="Alcoholic: " checked={props.isAlcoholic} handleChange={handleIsAlcoholicChange} />
             <Select id='ingredients' name='ingredients' label="Ingredient: " options={props.ingredients} attr="strIngredient1" handleChange={handleIngredientChange} />
+            <Select id='categories' name='categories' label="Category: " options={props.categories} attr="strCategory" handleChange={handleCategoryChange} />
+            <Select id='glasses' name='glasses' label="Glass: " options={props.glasses} attr="strGlass" handleChange={handleGlassChange} />
         </form>
     );
 }
